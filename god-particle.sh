@@ -11,7 +11,7 @@ mv backup.sh /home/pi/bin/backup
 
 
 #Create array of packages to check
-PACKAGES=("tmux" "htop" "nmap" "neofetch" "vim" "figlet" "cmatrix" "terminology")
+PACKAGES=("tmux" "htop" "nmap" "neofetch" "vim" "figlet" "cmatrix" "terminology" "rename")
 ARRAYSIZE=${#PACKAGES[@]} #This variable is created because the length of array would decrease while
 			 #through the while loop
 
