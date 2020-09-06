@@ -24,6 +24,41 @@ vim-line-count(){
 			sudo sed -i ' 50i\set number ' /etc/vim/vimrc
 		fi
 }
+#Startup Scripts
+startup-scripts(){
+
+ 	read -p "Would you like any scripts to be run automatically when you log in[Y/n]" RE
+        
+	if [[ "$RE" =~ [y-Y]+ ]];
+        then
+                #Setup counter for loop
+                N=1
+                #Loops allows user to input mutiple scripts
+		while [ $N -le 2 ];
+                do
+                        read -p "Enter script name: " SCRIPT
+
+                        #Echo would suffice here, but I use sed for practice
+                        LENGTH= $( wc -l /home/pi/.bashrc | awk ' {print $1}' ) #Figure out last line of .bashrc
+                        sudo sed -i "${LENGTH}i\ sudo bash $SCRIPT " /home/pi/.bashrc
+
+                        read -p "Would you like to add another script[Y/n]" REPLY
+                        if [[ $REPLY =~ [y-Y]+ ]];
+                        then
+                                n=1
+
+                        else
+                                n=2
+
+                        fi
+                done
+        fi
+
+
+
+
+
+}
 
 
 #check if ~/bin is added to env Path
@@ -75,6 +110,9 @@ sudo apt install ${PACKAGES[@]}
 
 #Add line count to VIM after it is installed
 vim-line-count
+
+#Allow user-inputed scripts to run upon login
+startup-scripts
 
 echo  " Everything is good to go! "
 shutdown -r
