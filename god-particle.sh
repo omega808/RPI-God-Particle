@@ -31,6 +31,8 @@ read -p "Do you want to do backups to a usb [Y\n]" USB
 
 #For git, create a bin directory and move the backup scripts to it
 mkdir /home/pi/bin
+#Make the backup file excutable
+sudo chmod 755 backup.sh
 mv backup.sh /home/pi/bin/backup
 
 
