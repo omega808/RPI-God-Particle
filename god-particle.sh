@@ -2,11 +2,35 @@
 #Author:NewWavex86
 #Startup script for the raspberry pi, modified Git vewrsion for users not using my local configurations
  
-
+N=0 #Another container for loop
 VAR=0 #Container for while loop
 
-#For git, create a bin directory and move the backup script to it
-mdkir /home/pi/bin
+#Add usb variables to backup
+read -p "Do you want to do backups to a usb [Y\n]" USB
+	if [[ $USB =~ [y-Y] ]];
+	then
+		sed -i ' 6c\ USB_BACKUP\=\"Y\" ' backup.sh
+		
+		while [ $N -lt 1 ];
+		do
+			read -p "Enter the full path of your usb: " USB_PATH
+
+			#check if path is entered correctly
+			if ! [[  $USB_PATH =~ ^/ ||  $USB_PATH =~ $/ ]];
+			then
+				echo "make sure to enter full path"
+			else #User entered full path, exit loop and write path to script
+				let N++ 
+				sed -i " 5c\ USB_PATH\=\"$USB_PATH\" "
+			fi
+		done		
+	else 
+		#Write to backup to not do usb backup
+		sed -i ' 6c\USB_PATH\=\"N\" ' backup.sh
+	fi
+
+#For git, create a bin directory and move the backup scripts to it
+mkdir /home/pi/bin
 mv backup.sh /home/pi/bin/backup
 
 
@@ -53,10 +77,6 @@ startup-scripts(){
                         fi
                 done
         fi
-
-
-
-
 
 }
 
