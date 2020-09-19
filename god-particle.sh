@@ -65,16 +65,16 @@ startup-scripts(){
                         read -p "Enter script name: " SCRIPT
 
                         #Echo would suffice here, but I use sed for practice
-                        LENGTH= $( wc -l /home/pi/.bashrc | awk ' {print $1}' ) #Figure out last line of .bashrc
+                        LENGTH=$( wc -l /home/pi/.bashrc | awk ' {print $1}' ) #Figure out last line of .bashrc
                         sudo sed -i "${LENGTH}i\ sudo bash $SCRIPT " /home/pi/.bashrc
 
                         read -p "Would you like to add another script[Y/n]" REPLY
                         if [[ $REPLY =~ [y-Y]+ ]];
                         then
-                                n=1
+                                N=1
 
                         else
-                                n=2
+                                N=2
 
                         fi
                 done
